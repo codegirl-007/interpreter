@@ -6,8 +6,7 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `10 != 9;
-`
+	input := `10 != 9;`
 
 	// this should match the input above
 	tests := []struct {
