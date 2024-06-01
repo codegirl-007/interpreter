@@ -18,7 +18,7 @@ type Expression interface {
 	expressionNode()
 }
 
-// The root of every AST 
+// The root of every AST
 type Program struct {
 	Statements []Statement
 }
@@ -35,16 +35,8 @@ func (p *Program) TokenLiteral() string {
 // var x = 5 -> name = x and value = 5
 type VarStatement struct {
 	Token token.Token
-	Name *Identifier
+	Name  *Identifier
 	Value Expression
-}
-
-func (vs *VarStatement) statementNode() {
-
-}
-
-func (vs *VarStatement) TokenLiteral() string {
-	return vs.Token.Literal
 }
 
 type Identifier struct {
@@ -52,10 +44,23 @@ type Identifier struct {
 	Value string
 }
 
-func (i *Identifier) expressionNode() {
+type ReturnStatement struct {
+	Token       token.Token
+	ReturnValue Expression
+}
 
+func (vs *VarStatement) statementNode()    {}
+func (rs *ReturnStatement) statementNode() {}
+func (i *Identifier) expressionNode()      {}
+
+func (vs *VarStatement) TokenLiteral() string {
+	return vs.Token.Literal
 }
 
 func (i *Identifier) TokenLiteral() string {
 	return i.Token.Literal
+}
+
+func (rs *ReturnStatement) TokenLiteral() string {
+	return rs.Token.Literal
 }
