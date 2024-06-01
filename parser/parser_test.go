@@ -12,12 +12,13 @@ func TestVarStatements(t *testing.T) {
 	input := `
 var x = 5;
 var y = 10;
-var foobar = 838383;
+var 838383;
 `
 	l := lexer.New(input)
 	p := New(l)
 
 	program := p.ParseProgram()
+	checkParserErrors(t, p)
 	if program == nil {
 		t.Fatalf("ParseProgram() returned nil")
 	}
@@ -42,6 +43,20 @@ var foobar = 838383;
 	}
 }
 
+func checkParserErrors(t *testing.T, p *Parser) {
+	errors := p.Errors()
+	if len(errors) == 0 {
+		return
+	}
+
+	t.Errorf("parser has %d error", len(errors))
+
+	for _, msg := range errors {
+		t.Errorf("parser error: %q", msg)
+	}
+
+	t.FailNow()
+}
 func testVarStatement(t *testing.T, s ast.Statement, name string) bool {
 	if s.TokenLiteral() != "var" {
 		t.Errorf("s.TokenLiteral not 'var'. got=%q", s.TokenLiteral())
