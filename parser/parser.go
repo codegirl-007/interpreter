@@ -51,7 +51,7 @@ func (p *Parser) parseVarStatement() *ast.VarStatement {
 	// check to see what the next token is (because see you're using expectPeek here which advances the pointer)
 	if !p.expectPeek(token.IDENT) { // expect an IDENT
 		// returning nil results in the entire statement being ignored because of an error in input
-		// This is silent and needs error handling
+		// peekError is called in expect token so you will see errors.
 		return nil
 	}
 
